@@ -10,12 +10,16 @@ cmake = import('cmake')
 minhook_proj = cmake.subproject('minhook')
 minhook_dep = minhook_proj.dependency('minhook')
 
-sources = ['src/main.cpp']
+sources = ['src/main.cpp', 'src/core/entry/winmain.cpp']
+
+inc = include_directories('src')
 
 shared_library(
     'renfsu2',
     sources,
+    include_directories: inc,
     dependencies: minhook_dep,
+    link_args: ['-static-libgcc', '-static-libstdc++', '-static'],
     name_prefix: '',
     install: true,
 )
