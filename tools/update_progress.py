@@ -7,8 +7,47 @@ JSON_FILE = "functions.json"
 README_FILE = "README.md"
 
 PATTERN = re.compile(
-    r"//\s*@original:\s*(0x[0-9a-fA-F]+)(?:\s*@status:\s*(wip|done))?", re.IGNORECASE
+    r"//\s*@original:\s*(0x[0-9a-fA-F]+)(?:\s*@status:\s*(wip|done))?",
+    re.IGNORECASE,
 )
+CALLORIGINAL_PATTERN = re.compile(r"CallOriginal\s*<[^>]*>\s*\([^;]*\)\s*;")
+
+
+def extract_function_body(content, comment_end_idx):
+    brace_start = content.find("{", comment_end_idx)
+    if brace_start == -1:
+        return None
+    depth = 0
+    for i in range(brace_start, len(content)):
+        if content[i] == "{":
+            depth += 1
+        elif content[i] == "}":
+            depth -= 1
+            if depth == 0:
+                return content[brace_start + 1 : i]
+    return None
+
+
+def strip_comments(body):
+    body = re.sub(r"//.*", "", body)
+    body = re.sub(r"/\*.*?\*/", "", body, flags=re.DOTALL)
+    return body
+
+
+def determine_status(body, explicit_status):
+    if explicit_status == "done":
+        return "done"
+
+    stripped = strip_comments(body).strip()
+    has_call_original = CALLORIGINAL_PATTERN.search(stripped) is not None
+
+    if has_call_original:
+        remainder = CALLORIGINAL_PATTERN.sub("", stripped).strip()
+        if remainder == "":
+            return "stubbed"
+        return "wip"
+
+    return "wip"
 
 
 def get_implemented_functions():
@@ -18,13 +57,16 @@ def get_implemented_functions():
             if file.endswith((".cpp", ".c", ".h", ".hpp")):
                 filepath = os.path.join(root, file)
                 with open(filepath, "r", encoding="utf-8") as f:
-                    for line in f:
-                        match = PATTERN.search(line)
-                        if match:
-                            addr = hex(int(match.group(1), 16))
-                            status = match.group(2).lower() if match.group(2) else "wip"
-                            implemented[addr] = status
-
+                    content = f.read()
+                for match in PATTERN.finditer(content):
+                    addr = hex(int(match.group(1), 16))
+                    explicit_status = match.group(2).lower() if match.group(2) else None
+                    body = extract_function_body(content, match.end())
+                    if body is None:
+                        status = explicit_status or "wip"
+                    else:
+                        status = determine_status(body, explicit_status)
+                    implemented[addr] = status
     return implemented
 
 
@@ -66,6 +108,7 @@ def main():
     stats = {
         "done": {"count": 0, "size": 0},
         "wip": {"count": 0, "size": 0},
+        "stubbed": {"count": 0, "size": 0},
         "missing": {"count": 0, "size": 0},
     }
 
@@ -80,10 +123,12 @@ def main():
 
     done_pct = (stats["done"]["size"] / total_size) * 100 if total_size else 0
     wip_pct = (stats["wip"]["size"] / total_size) * 100 if total_size else 0
+    stubbed_pct = (stats["stubbed"]["size"] / total_size) * 100 if total_size else 0
     missing_pct = (stats["missing"]["size"] / total_size) * 100 if total_size else 0
 
     top_badges_markdown = f"""![Done](https://img.shields.io/badge/Done-{done_pct:.3f}%25-success)
 ![WIP](https://img.shields.io/badge/WIP-{wip_pct:.3f}%25-yellow)
+![Stubbed](https://img.shields.io/badge/Stubbed-{stubbed_pct:.3f}%25-blue)
 ![Missing](https://img.shields.io/badge/Missing-{missing_pct:.3f}%25-red)"""
 
     table_markdown = f"""
@@ -91,6 +136,7 @@ def main():
 | :--- | ---: | ---: | ---: |
 | 🟢 **Done** | {stats["done"]["count"]:,} | {stats["done"]["size"]:,} | {done_pct:.3f}% |
 | 🟡 **WIP** | {stats["wip"]["count"]:,} | {stats["wip"]["size"]:,} | {wip_pct:.3f}% |
+| 🔵 **Stubbed** | {stats["stubbed"]["count"]:,} | {stats["stubbed"]["size"]:,} | {stubbed_pct:.3f}% |
 | 🔴 **Missing** | {stats["missing"]["count"]:,} | {stats["missing"]["size"]:,} | {missing_pct:.3f}% |
 | 📊 **Total** | **{total_funcs:,}** | **{total_size:,}** | **100%** |
 """

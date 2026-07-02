@@ -1,5 +1,6 @@
 #include <libloaderapi.h>
 #include <windows.h>
+#include <MinHook.h>
 
 DWORD WINAPI InitThread(LPVOID)
 {
@@ -12,6 +13,7 @@ BOOL APIENTRY DllMain(HMODULE hModule, DWORD reason, LPVOID)
     if (reason == DLL_PROCESS_ATTACH)
     {
         DisableThreadLibraryCalls(hModule);
+        MH_Initialize();
         CreateThread(nullptr, 0, InitThread, nullptr, 0, nullptr);
     }
 
