@@ -10,7 +10,9 @@ PATTERN = re.compile(
     r"//\s*@original:\s*(0x[0-9a-fA-F]+)(?:\s*@status:\s*(wip|done))?",
     re.IGNORECASE,
 )
-CALLORIGINAL_PATTERN = re.compile(r"CallOriginal\s*<[^>]*>\s*\([^;]*\)\s*;")
+CALLORIGINAL_PATTERN = re.compile(
+    r"(?:return\s+)?\b[a-zA-Z_]\w*\.CallOriginal\s*\([^)]*\)\s*;?"
+)
 
 
 def extract_function_body(content, comment_end_idx):
@@ -43,6 +45,7 @@ def determine_status(body, explicit_status):
 
     if has_call_original:
         remainder = CALLORIGINAL_PATTERN.sub("", stripped).strip()
+
         if remainder == "":
             return "stubbed"
         return "wip"

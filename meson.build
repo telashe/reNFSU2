@@ -10,7 +10,13 @@ cmake = import('cmake')
 minhook_proj = cmake.subproject('minhook')
 minhook_dep = minhook_proj.dependency('minhook')
 
-sources = ['src/main.cpp', 'src/core/entry/winmain.cpp']
+sources = run_command(
+    'find',
+    'src',
+    '-name',
+    '*.cpp',
+    check: true
+).stdout().strip().split()
 
 inc = include_directories('src')
 
