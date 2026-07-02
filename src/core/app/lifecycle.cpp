@@ -12,8 +12,15 @@ void nfsu2::app::Initialize(HINSTANCE hInstance, HINSTANCE hPrevInstance) {
 }
 
 // @original: 0x005cf960
-NFSU2_HOOK_CDECL(Shutdown, 0x005cf960, void, void) {
+NFSU2_HOOK_CDECL(Shutdown, 0x005cf960, void) {
     return g_hook_Shutdown.CallOriginal();
 }
 
 void nfsu2::app::Shutdown() { Detour_Shutdown(); }
+
+// @original: 0x005811c0
+NFSU2_HOOK_CDECL(RunMainLoop, 0x005811c0, void) {
+    return g_hook_RunMainLoop.CallOriginal();
+}
+
+void nfsu2::app::RunMainLoop() { Detour_RunMainLoop(); };
