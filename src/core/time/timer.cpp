@@ -1,8 +1,8 @@
 #include "timer.hpp"
-#include "core/hook/hook.hpp"
+#include "core/hook/macros.hpp"
 #include <windows.h>
 
-namespace nfsu::time {
+namespace nfsu2::time {
 float &g_SecondsPerTick = *(float *)0x00828028;
 int &g_TimerShift = *(int *)0x008284e4;
 
@@ -25,4 +25,6 @@ void InitTimer() {
     }
 }
 
-} // namespace nfsu::time
+} // namespace nfsu2::time
+
+NFSU2_HOOK_CDECL(InitTimer, 0x0043bd90, void, void) { nfsu::time::InitTimer(); }
