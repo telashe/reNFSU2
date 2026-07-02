@@ -3,9 +3,9 @@
 # reNFSU2
 
 <!-- TOP_BADGES_START -->
-![Done](https://img.shields.io/badge/Done-0.000%25-success)
+![Done](https://img.shields.io/badge/Done-0.009%25-success)
 ![WIP](https://img.shields.io/badge/WIP-0.000%25-yellow)
-![Stubbed](https://img.shields.io/badge/Stubbed-0.056%25-blue)
+![Stubbed](https://img.shields.io/badge/Stubbed-0.048%25-blue)
 ![Missing](https://img.shields.io/badge/Missing-99.944%25-red)
 <!-- TOP_BADGES_END -->
 
@@ -25,9 +25,9 @@ to the original game.
 
 | Status | Functions | Bytes | Percentage |
 | :--- | ---: | ---: | ---: |
-| 🟢 **Done** | 0 | 0 | 0.000% |
+| 🟢 **Done** | 1 | 274 | 0.009% |
 | 🟡 **WIP** | 0 | 0 | 0.000% |
-| 🔵 **Stubbed** | 6 | 1,779 | 0.056% |
+| 🔵 **Stubbed** | 5 | 1,505 | 0.048% |
 | 🔴 **Missing** | 14,904 | 3,160,447 | 99.944% |
 | 📊 **Total** | **14,910** | **3,162,226** | **100%** |
 
