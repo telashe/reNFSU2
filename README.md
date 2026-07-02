@@ -4,15 +4,15 @@
 
 <!-- TOP_BADGES_START -->
 ![Done](https://img.shields.io/badge/Done-0.000%25-success)
-![WIP](https://img.shields.io/badge/WIP-0.002%25-yellow)
-![Missing](https://img.shields.io/badge/Missing-99.998%25-red)
+![WIP](https://img.shields.io/badge/WIP-0.000%25-yellow)
+![Missing](https://img.shields.io/badge/Missing-100.000%25-red)
 <!-- TOP_BADGES_END -->
 
 </div>
 
 ---
 
-WIP 1:1 reimplementation of Need for Speed 2: Underground. The long-term goal is a
+WIP 1:1 reimplementation of Need for Speed: Underground 2. The long-term goal is a
 fully open-source, cross-platform-capable reimplementation that behaves identically
 to the original game.
 
@@ -25,8 +25,8 @@ to the original game.
 | Status | Functions | Bytes | Percentage |
 | :--- | ---: | ---: | ---: |
 | 🟢 **Done** | 0 | 0 | 0.000% |
-| 🟡 **WIP** | 2 | 64 | 0.002% |
-| 🔴 **Missing** | 14,908 | 3,162,162 | 99.998% |
+| 🟡 **WIP** | 0 | 0 | 0.000% |
+| 🔴 **Missing** | 14,910 | 3,162,226 | 100.000% |
 | 📊 **Total** | **14,910** | **3,162,226** | **100%** |
 
 <!-- PROGRESS_END -->

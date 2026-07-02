@@ -15,7 +15,6 @@ sources = ['src/main.cpp']
 shared_library(
     'renfsu2',
     sources,
-    dependencies: minhook_dep,
     name_prefix: '',
     install: true,
 )
