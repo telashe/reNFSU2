@@ -10,8 +10,9 @@ PATTERN = re.compile(
     r"//\s*@original:\s*(0x[0-9a-fA-F]+)(?:\s*@status:\s*(wip|done))?",
     re.IGNORECASE,
 )
-CALLORIGINAL_PATTERN = re.compile(
-    r"(?:return\s+)?\b[a-zA-Z_]\w*\.CallOriginal\s*\([^)]*\)\s*;?"
+STUB_PATTERN = re.compile(
+    r"^(?:return\s*)?(?:\([a-zA-Z0-9_:\s*]+\)\s*)?(?:[a-zA-Z0-9_:]+\s*(?:\.|\->)\s*CallOriginal|Detour_[a-zA-Z0-9_:]+)\s*\(.*\)\s*;?$",
+    re.DOTALL,
 )
 
 
@@ -41,14 +42,9 @@ def determine_status(body, explicit_status):
         return "done"
 
     stripped = strip_comments(body).strip()
-    has_call_original = CALLORIGINAL_PATTERN.search(stripped) is not None
 
-    if has_call_original:
-        remainder = CALLORIGINAL_PATTERN.sub("", stripped).strip()
-
-        if remainder == "":
-            return "stubbed"
-        return "wip"
+    if STUB_PATTERN.fullmatch(stripped):
+        return "stubbed"
 
     return "wip"
 

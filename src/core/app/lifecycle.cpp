@@ -2,7 +2,6 @@
 #include "core/hook/macros.hpp"
 #include "core/utils/logger.hpp"
 
-// @original: 0x0057ed10
 NFSU2_HOOK_CDECL(Initialize, 0x0057ed10, void, int argc, char **argv) {
     LOG_INFO("Initializing application.");
     LOG_INFO("Command line arguments: %d", argc);
@@ -14,11 +13,11 @@ NFSU2_HOOK_CDECL(Initialize, 0x0057ed10, void, int argc, char **argv) {
     return g_hook_Initialize.CallOriginal(argc, argv);
 }
 
+// @original: 0x0057ed10
 void nfsu2::app::Initialize(int argc, char **argv) {
     return Detour_Initialize(argc, argv);
 }
 
-// @original: 0x005cf960
 NFSU2_HOOK_CDECL(Shutdown, 0x005cf960, void) {
     LOG_INFO("Shutting down application.");
 
@@ -27,9 +26,9 @@ NFSU2_HOOK_CDECL(Shutdown, 0x005cf960, void) {
     LOG_INFO("Application shutdown complete. Goodbye!");
 }
 
+// @original: 0x005811c0
 void nfsu2::app::Shutdown() { Detour_Shutdown(); }
 
-// @original: 0x005811c0
 NFSU2_HOOK_CDECL(RunMainLoop, 0x005811c0, void) {
     LOG_INFO("Entering main game loop...");
 
@@ -38,4 +37,5 @@ NFSU2_HOOK_CDECL(RunMainLoop, 0x005811c0, void) {
     LOG_INFO("Main game loop exited.");
 }
 
+// @original: 0x005811c0
 void nfsu2::app::RunMainLoop() { Detour_RunMainLoop(); };
