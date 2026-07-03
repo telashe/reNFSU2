@@ -2,13 +2,12 @@
 #include "core/hook/macros.hpp"
 
 // @original: 0x0057ed10
-NFSU2_HOOK_CDECL(Initialize, 0x0057ed10, void, HINSTANCE hInstance,
-                 HINSTANCE hPrevInstance) {
-    return g_hook_Initialize.CallOriginal(hInstance, hPrevInstance);
+NFSU2_HOOK_CDECL(Initialize, 0x0057ed10, void, int argc, char **argv) {
+    return g_hook_Initialize.CallOriginal(argc, argv);
 }
 
-void nfsu2::app::Initialize(HINSTANCE hInstance, HINSTANCE hPrevInstance) {
-    return Detour_Initialize(hInstance, hPrevInstance);
+void nfsu2::app::Initialize(int argc, char **argv) {
+    return Detour_Initialize(argc, argv);
 }
 
 // @original: 0x005cf960

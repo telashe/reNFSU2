@@ -6,7 +6,7 @@ namespace nfsu2::time {
 float &g_SecondsPerTick = *(float *)0x00828028;
 int &g_TimerShift = *(int *)0x008284e4;
 
-// @original: 0x0043bd90
+// @original: 0x0043bd90 @status: done
 void InitTimer() {
     LARGE_INTEGER frequency;
     QueryPerformanceFrequency(&frequency);
@@ -27,4 +27,6 @@ void InitTimer() {
 
 } // namespace nfsu2::time
 
-NFSU2_HOOK_CDECL(InitTimer, 0x0043bd90, void, void) { nfsu::time::InitTimer(); }
+NFSU2_HOOK_CDECL(InitTimer, 0x0043bd90, void, void) {
+    nfsu2::time::InitTimer();
+}
