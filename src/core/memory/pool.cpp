@@ -1,12 +1,7 @@
 #include "pool.hpp"
 #include "core/hook/macros.hpp"
 #include "core/utils/logger.hpp"
-
-namespace nfsu2::memory {
-bool &g_IsMainPoolInitialized = *(bool *)0x00828510;
-MemoryPool *&g_pCurrentMemoryPool = *(MemoryPool **)0x00828154;
-MemoryPool *g_MainMemoryPoolObj = (MemoryPool *)0x00828218;
-} // namespace nfsu2::memory
+#include "refs.hpp"
 
 void __thiscall nfsu2::memory::MemoryPool::Constructor(void *startAddr,
                                                        int size,
@@ -18,14 +13,14 @@ void __thiscall nfsu2::memory::MemoryPool::Constructor(void *startAddr,
 
 // @original: 0x00440360
 void nfsu2::memory::InitializeMainPool() {
-    if (!g_IsMainPoolInitialized) {
+    if (!refs::IsMainPoolInitialized()) {
         LOG_INFO("Initializing main memory pool...");
 
-        g_pCurrentMemoryPool = g_MainMemoryPoolObj;
+        refs::CurrentMemoryPool() = refs::MainMemoryPoolObj();
 
-        g_MainMemoryPoolObj->Constructor(nullptr, 0, "Main Pool");
+        refs::MainMemoryPoolObj()->Constructor(nullptr, 0, "Main Pool");
 
-        g_IsMainPoolInitialized = true;
+        refs::IsMainPoolInitialized() = true;
         LOG_INFO("Main memory pool initialized successfully.");
     }
 }
