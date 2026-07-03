@@ -10,11 +10,6 @@ void nfsu2::app::SetupEarlyBootstrap(int argc, char **argv) {
     return Detour_SetupEarlyBootstrap(argc, argv);
 }
 
-// @original: 0x00440360
-NFSU2_HOOK_CDECL(FUN_00440360, 0x00440360, void, void) {
-    return g_hook_FUN_00440360.CallOriginal();
-}
-
 // @original: 0x006fbe2c
 NFSU2_HOOK_CDECL(FUN_006fbe2c, 0x006fbe2c, void, void) {
     return g_hook_FUN_006fbe2c.CallOriginal();

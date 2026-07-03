@@ -4,8 +4,8 @@
 
 <!-- TOP_BADGES_START -->
 ![Done](https://img.shields.io/badge/Done-0.012%25-success)
-![WIP](https://img.shields.io/badge/WIP-0.000%25-yellow)
-![Stubbed](https://img.shields.io/badge/Stubbed-0.067%25-blue)
+![WIP](https://img.shields.io/badge/WIP-0.001%25-yellow)
+![Stubbed](https://img.shields.io/badge/Stubbed-0.066%25-blue)
 ![Missing](https://img.shields.io/badge/Missing-99.921%25-red)
 <!-- TOP_BADGES_END -->
 
@@ -26,8 +26,8 @@ to the original game.
 | Status | Functions | Bytes | Percentage |
 | :--- | ---: | ---: | ---: |
 | 🟢 **Done** | 2 | 368 | 0.012% |
-| 🟡 **WIP** | 0 | 0 | 0.000% |
-| 🔵 **Stubbed** | 10 | 2,121 | 0.067% |
+| 🟡 **WIP** | 1 | 45 | 0.001% |
+| 🔵 **Stubbed** | 9 | 2,076 | 0.066% |
 | 🔴 **Missing** | 14,898 | 3,159,737 | 99.921% |
 | 📊 **Total** | **14,910** | **3,162,226** | **100%** |
 
