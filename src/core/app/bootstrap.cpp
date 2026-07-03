@@ -34,3 +34,10 @@ NFSU2_HOOK_CDECL(FUN_006f5c91, 0x006f5c91, void, int a1) {
 NFSU2_HOOK_CDECL(FUN_005b7a70, 0x005b7a70, void, void) {
     return g_hook_FUN_005b7a70.CallOriginal();
 }
+
+/*
+Hooking this causes a crash. Probably we should pass some arguments
+NFSU2_HOOK_CDECL(FUN_005c0d30, 0x005c0d30, int, void) {
+    return g_hook_FUN_005c0d30.CallOriginal();
+}
+*/
