@@ -1,4 +1,5 @@
 #pragma once
+#include "core/utils/logger.hpp"
 #include <MinHook.h>
 #include <vector>
 
@@ -21,21 +22,52 @@ class HookManager {
     void Register(IHook *hook) { m_hooks.push_back(hook); }
 
     bool InstallAll() {
-        if (MH_Initialize() != MH_OK)
+        LOG_INFO("Initializing hooks...");
+        MH_STATUS status = MH_Initialize();
+        if (status != MH_OK) {
+            LOG_ERROR("[HookManager] Failed to initialize MinHook! Error: %s",
+                      MH_StatusToString(status));
             return false;
+        }
+
+        LOG_INFO("Installing %zu hooks...", m_hooks.size());
+
         bool ok = true;
+        int successCount = 0;
+
         for (auto *h : m_hooks) {
             if (!h->Install()) {
+                LOG_ERROR("Hook installation aborted due to failure in: %s",
+                          h->Name());
                 ok = false;
+            } else {
+                successCount++;
             }
         }
+
+        if (ok) {
+            LOG_INFO("Succesfully installed all %d hooks.", successCount);
+        } else {
+            LOG_ERROR(
+                "Hook installation finished with errors. (%d/%zu successful)",
+                successCount, m_hooks.size());
+        }
+
         return ok;
     }
 
     void RemoveAll() {
+        LOG_INFO("Removing all hooks...");
         for (auto *h : m_hooks)
             h->Remove();
-        MH_Uninitialize();
+
+        MH_STATUS status = MH_Uninitialize();
+        if (status == MH_OK) {
+            LOG_INFO("MinHook uninitialized successfully.");
+        } else {
+            LOG_ERROR("Failed to uninitialize MinHook! Error: %s",
+                      MH_StatusToString(status));
+        }
     }
 
   private:
@@ -57,10 +89,26 @@ class FunctionHook<Ret(__cdecl *)(Args...)> : public IHook {
 
     bool Install() override {
         void *target = reinterpret_cast<void *>(m_address);
-        if (MH_CreateHook(target, reinterpret_cast<void *>(m_detour),
-                          reinterpret_cast<void **>(&m_original)) != MH_OK)
+
+        MH_STATUS createStatus =
+            MH_CreateHook(target, reinterpret_cast<void *>(m_detour),
+                          reinterpret_cast<void **>(&m_original));
+
+        if (createStatus != MH_OK) {
+            LOG_ERROR("[%s] MH_CreateHook failed at 0x%zX. Error: %s", m_name,
+                      m_address, MH_StatusToString(createStatus));
             return false;
-        return MH_EnableHook(target) == MH_OK;
+        }
+
+        MH_STATUS enableStatus = MH_EnableHook(target);
+        if (enableStatus != MH_OK) {
+            LOG_ERROR("[%s] MH_EnableHook failed at 0x%zX. Error: %s", m_name,
+                      m_address, MH_StatusToString(enableStatus));
+            return false;
+        }
+
+        LOG_INFO("[%s] Installed successfully at 0x%zX", m_name, m_address);
+        return true;
     }
 
     bool Remove() override {
@@ -87,18 +135,37 @@ class FunctionHook<Ret(__stdcall *)(Args...)> : public IHook {
         : m_name(name), m_address(address), m_detour(detour) {
         HookManager::Instance().Register(this);
     }
+
     bool Install() override {
         void *target = reinterpret_cast<void *>(m_address);
-        if (MH_CreateHook(target, reinterpret_cast<void *>(m_detour),
-                          reinterpret_cast<void **>(&m_original)) != MH_OK)
+
+        MH_STATUS createStatus =
+            MH_CreateHook(target, reinterpret_cast<void *>(m_detour),
+                          reinterpret_cast<void **>(&m_original));
+
+        if (createStatus != MH_OK) {
+            LOG_ERROR("[%s] MH_CreateHook failed at 0x%zX. Error: %s", m_name,
+                      m_address, MH_StatusToString(createStatus));
             return false;
-        return MH_EnableHook(target) == MH_OK;
+        }
+
+        MH_STATUS enableStatus = MH_EnableHook(target);
+        if (enableStatus != MH_OK) {
+            LOG_ERROR("[%s] MH_EnableHook failed at 0x%zX. Error: %s", m_name,
+                      m_address, MH_StatusToString(enableStatus));
+            return false;
+        }
+
+        LOG_INFO("[%s] Installed successfully at 0x%zX", m_name, m_address);
+        return true;
     }
+
     bool Remove() override {
         void *target = reinterpret_cast<void *>(m_address);
         MH_DisableHook(target);
         return MH_RemoveHook(target) == MH_OK;
     }
+
     const char *Name() const override { return m_name; }
     Ret CallOriginal(Args... args) const { return m_original(args...); }
 
@@ -117,18 +184,37 @@ class FunctionHook<Ret(__thiscall *)(Args...)> : public IHook {
         : m_name(name), m_address(address), m_detour(detour) {
         HookManager::Instance().Register(this);
     }
+
     bool Install() override {
         void *target = reinterpret_cast<void *>(m_address);
-        if (MH_CreateHook(target, reinterpret_cast<void *>(m_detour),
-                          reinterpret_cast<void **>(&m_original)) != MH_OK)
+
+        MH_STATUS createStatus =
+            MH_CreateHook(target, reinterpret_cast<void *>(m_detour),
+                          reinterpret_cast<void **>(&m_original));
+
+        if (createStatus != MH_OK) {
+            LOG_ERROR("[%s] MH_CreateHook failed at 0x%zX. Error: %s", m_name,
+                      m_address, MH_StatusToString(createStatus));
             return false;
-        return MH_EnableHook(target) == MH_OK;
+        }
+
+        MH_STATUS enableStatus = MH_EnableHook(target);
+        if (enableStatus != MH_OK) {
+            LOG_ERROR("[%s] MH_EnableHook failed at 0x%zX. Error: %s", m_name,
+                      m_address, MH_StatusToString(enableStatus));
+            return false;
+        }
+
+        LOG_INFO("[%s] Installed successfully at 0x%zX", m_name, m_address);
+        return true;
     }
+
     bool Remove() override {
         void *target = reinterpret_cast<void *>(m_address);
         MH_DisableHook(target);
         return MH_RemoveHook(target) == MH_OK;
     }
+
     const char *Name() const override { return m_name; }
     Ret CallOriginal(Args... args) const { return m_original(args...); }
 

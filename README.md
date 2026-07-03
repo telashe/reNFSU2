@@ -3,10 +3,10 @@
 # reNFSU2
 
 <!-- TOP_BADGES_START -->
-![Done](https://img.shields.io/badge/Done-0.009%25-success)
-![WIP](https://img.shields.io/badge/WIP-0.003%25-yellow)
-![Stubbed](https://img.shields.io/badge/Stubbed-0.049%25-blue)
-![Missing](https://img.shields.io/badge/Missing-99.939%25-red)
+![Done](https://img.shields.io/badge/Done-0.012%25-success)
+![WIP](https://img.shields.io/badge/WIP-0.000%25-yellow)
+![Stubbed](https://img.shields.io/badge/Stubbed-0.063%25-blue)
+![Missing](https://img.shields.io/badge/Missing-99.925%25-red)
 <!-- TOP_BADGES_END -->
 
 </div>
@@ -25,10 +25,10 @@ to the original game.
 
 | Status | Functions | Bytes | Percentage |
 | :--- | ---: | ---: | ---: |
-| 🟢 **Done** | 1 | 274 | 0.009% |
-| 🟡 **WIP** | 1 | 94 | 0.003% |
-| 🔵 **Stubbed** | 8 | 1,563 | 0.049% |
-| 🔴 **Missing** | 14,900 | 3,160,295 | 99.939% |
+| 🟢 **Done** | 2 | 368 | 0.012% |
+| 🟡 **WIP** | 0 | 0 | 0.000% |
+| 🔵 **Stubbed** | 9 | 1,995 | 0.063% |
+| 🔴 **Missing** | 14,899 | 3,159,863 | 99.925% |
 | 📊 **Total** | **14,910** | **3,162,226** | **100%** |
 
 <!-- PROGRESS_END -->
