@@ -4790,7 +4790,7 @@
     "size": 42
   },
   {
-    "name": "FUN_0043bd90",
+    "name": "InitTimer",
     "address": "0043bd90",
     "size": 94
   },
@@ -5265,7 +5265,7 @@
     "size": 46
   },
   {
-    "name": "thunk_FUN_0043bd90",
+    "name": "InitTimer",
     "address": "0043e5b0",
     "size": 5
   },
@@ -19790,7 +19790,7 @@
     "size": 15
   },
   {
-    "name": "App_BootToDebugMenu",
+    "name": "BootToDebugMenu",
     "address": "004fef60",
     "size": 25
   },
@@ -31840,7 +31840,7 @@
     "size": 94
   },
   {
-    "name": "App_Initialize",
+    "name": "Initialize",
     "address": "0057ed10",
     "size": 231
   },
@@ -31900,7 +31900,7 @@
     "size": 454
   },
   {
-    "name": "App_ParseCommandLine",
+    "name": "ParseCommandLine",
     "address": "00580880",
     "size": 312
   },
@@ -31915,7 +31915,7 @@
     "size": 885
   },
   {
-    "name": "WinMain",
+    "name": "main",
     "address": "00580e00",
     "size": 129
   },
@@ -31950,7 +31950,7 @@
     "size": 129
   },
   {
-    "name": "App_MainGameLoop",
+    "name": "RunMainLoop",
     "address": "005811c0",
     "size": 946
   },
@@ -36090,7 +36090,7 @@
     "size": 7
   },
   {
-    "name": "FUN_005b7690",
+    "name": "SetupEarlyBootstrap",
     "address": "005b7690",
     "size": 94
   },
@@ -36120,7 +36120,7 @@
     "size": 6
   },
   {
-    "name": "System_CheckProcessCount",
+    "name": "CheckProcessCount",
     "address": "005b7b20",
     "size": 274
   },
@@ -37670,7 +37670,7 @@
     "size": 1333
   },
   {
-    "name": "App_Shutdown",
+    "name": "Shutdown",
     "address": "005cf960",
     "size": 174
   },
