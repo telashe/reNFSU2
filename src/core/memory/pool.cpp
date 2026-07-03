@@ -3,11 +3,11 @@
 #include "core/utils/logger.hpp"
 #include "refs.hpp"
 
-void __thiscall nfsu2::memory::MemoryPool::Constructor(void *startAddr,
-                                                       int size,
-                                                       const char *name) {
-    auto *pFunc =
-        (void(__thiscall *)(MemoryPool *, void *, int, const char *))0x004402c0;
+void __thiscall nfsu2::memory::cMemoryPool::Constructor(void *startAddr,
+                                                        int size,
+                                                        const char *name) {
+    auto *pFunc = (void(__thiscall *)(cMemoryPool *, void *, int,
+                                      const char *))0x004402c0;
     pFunc(this, startAddr, size, name);
 }
 

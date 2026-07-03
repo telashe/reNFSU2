@@ -24,7 +24,6 @@ void InitTimer() {
         g_TimerShift++;
     }
 }
-
 } // namespace nfsu2::time
 
 NFSU2_HOOK_CDECL(InitTimer, 0x0043bd90, void, void) {

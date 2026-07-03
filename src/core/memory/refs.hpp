@@ -4,7 +4,7 @@
 namespace nfsu2::memory::refs {
 inline bool &IsMainPoolInitialized() { return *(bool *)0x00828510; }
 
-inline MemoryPool *&CurrentMemoryPool() { return *(MemoryPool **)0x00828154; }
+inline cMemoryPool *&CurrentMemoryPool() { return *(cMemoryPool **)0x00828154; }
 
-inline MemoryPool *MainMemoryPoolObj() { return (MemoryPool *)0x00828218; }
+inline cMemoryPool *MainMemoryPoolObj() { return (cMemoryPool *)0x00828218; }
 } // namespace nfsu2::memory::refs

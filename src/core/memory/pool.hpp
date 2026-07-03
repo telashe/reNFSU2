@@ -4,31 +4,31 @@
 #include <windows.h>
 
 namespace nfsu2::memory {
-struct MemoryNode {
-    MemoryNode *next;
-    MemoryNode *prev;
+struct sMemoryNode {
+    sMemoryNode *pNext;
+    sMemoryNode *pPrev;
 };
 
 #pragma pack(push, 4)
-class MemoryPool {
+class cMemoryPool {
   public:
-    const char *m_poolName;
-    MemoryNode m_freeList;
-    MemoryNode m_allocatedList;
-    MemoryNode m_largeBlockList;
-    int32_t m_allocatedBytes;
-    int32_t m_peakBytes;
-    int32_t m_totalSize;
-    int32_t m_numAllocations;
-    int32_t m_numFrees;
-    int32_t m_unknownStat3;
-    int32_t m_unknownStat4;
+    const char *m_pPoolName;
+    sMemoryNode m_FreeList;
+    sMemoryNode m_AllocatedList;
+    sMemoryNode m_LargeBlockList;
+    int32_t m_AllocatedBytes;
+    int32_t m_PeakBytes;
+    int32_t m_TotalSize;
+    int32_t m_NumAllocations;
+    int32_t m_NumFrees;
+    int32_t m_UnknownStat3;
+    int32_t m_UnknownStat4;
 
-    bool m_isActive;
-    bool m_isInitialized;
-    uint8_t m_pad[2];
+    bool m_IsActive;
+    bool m_IsInitialized;
+    uint8_t m_Pad[2];
 
-    CRITICAL_SECTION m_lock;
+    CRITICAL_SECTION m_Lock;
 
     void __thiscall Constructor(void *startAddr, int size, const char *name);
 };
